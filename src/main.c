@@ -3,25 +3,20 @@
 #include "../headers/utility.h"
 #include "../headers/sim.h"
 
-/*
- * 
- */
-
 int main(int argc, char** argv) 
 {
-    //Cria a instância da configuração e configura
-    Configuracao* cfg;
-    InitConfig(argc, argv, cfg);
-    
+    //Inicializa o caminho de I/O da simulação
+    char* path;
+    ChecaArgs(argc, argv, &path);
     //Cria a instância da simulação e configura
     Simulacao* sim;
-    InitSim(GetInput(cfg));
+    InitSim(path, &sim);
     
     //Simula
     Simulate(sim);
     
     //Fecha os arquivos
-    EndConfig(cfg);
+    EndSim(sim);
     
     return (EXIT_SUCCESS);
 }

@@ -3,34 +3,17 @@
 
 /*
  * Este arquivo consiste nas funções utilizadas para utilidades gerais do 
- * programa, tais como manipulação de arquivos.
+ * programa.
  */
 
-typedef struct config Configuracao;
-
 /*
- * InitConfig(): Checa os argumentos chamados na execução do programa, se
+ * ChecaArgs(): Checa os argumentos chamados na execução do programa, se
  * certificando de que o usuário passou o caminho do arquivo de configuração
- * como argumento. Retorna o tipo estruturado que contém as configurações da
- * simulação.
+ * como argumento.
  */
-void InitConfig(int argCount, char** argVal, Configuracao* cfg);
+void ChecaArgs(int argc, char** argv, char** path);
 
-/*
- * EndConfig(): Prepara o tipo estruturado de configuração para o fim do 
- * programa, fechando os arquivos abertos.
- */
-void EndConfig(Configuracao* cfg);
-
-/*
- * GetInput(): Retorna o arquivo de entrada de configuração.
- */
-FILE* GetInput(Configuracao* cfg);
-
-/*
- * GetOutput(): Retorna o arquivo de saída (log).
- */
-FILE* GetOutput(Configuracao* cfg);
+void Log_and_Print(char* msg);
 
 #endif /* UTILITY_H */
 
