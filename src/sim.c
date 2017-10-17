@@ -9,9 +9,6 @@
 #define PATH_LOG "%s/log.txt"
 #define PATH_LOG_SIZE 8
 
-
-static void LoadInstructions(Simulacao* s);
-
 /*
  * Creio que o cliente não precisará ter acesso aos tipos abaixo. Caso seja
  * necessário, mover para sim.h .
@@ -32,17 +29,40 @@ typedef struct mosquito Mosquito;
  */
 typedef struct agente Agente;
 
+typedef struct vizinho Vizinho;
+
+static void LoadInstructions(Simulacao* s);
+
+static void adiciona_casa(Simulacao* s, char* nome);
+
+static void adiciona_mosquito(Simulacao* s, char* nome);
+
+static void liga_casas(Simulacao* s, char* c1, char* c2);
+
+static Casa* AchaCasaPeloNome(Simulacao* s, char* nome);
+
+static void mosquito_move();
+
+static void agente_atua();
+
+static void mosquito_bota();
+
+struct vizinho
+{
+    Casa* orig;
+    Vizinho* prox;
+};
 
 struct casa
 {
     char* nome;
     Casa* proxCasa;
     Mosquito* mosquitos;
+    Vizinho* vizinhos;
 };
 
 struct mosquito
 {
-    int id;
     Mosquito* proxMosquito;
 };
 
@@ -58,6 +78,8 @@ struct sim
     FILE* log;
     int steps;
     Casa* casas;
+    int movMosquitos;
+    int movAgente;
 };
 
 void InitSim(char* path, Simulacao** sim)
@@ -91,6 +113,8 @@ void InitSim(char* path, Simulacao** sim)
     
     *sim = s;
     
+    s->casas->proxCasa = NULL;
+    
     LoadInstructions(s);
     
 }
@@ -115,24 +139,28 @@ static void LoadInstructions(Simulacao* s)
             int i;
             fscanf(s->config, "%d\n", &i);
             printf("\nDeb: agente atua %d", i);
+            s->movAgente = i;
         }
         else if (!strcmp("MOSQUITO_BOTA", buf))
         {
             int i;
             fscanf(s->config, "%d\n", &i);
             printf("\nDeb: mosquito bota %d", i);
+            s->movMosquitos = i;
         }
         else if (!strcmp(buf, "inserecasa"))
         {
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);
             printf("\nDeb: insere casa %s", bufB);
+            adiciona_casa(s, bufB);
         }
         else if(!strcmp(buf,"inseremosquito"))
         {
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);            
             printf("\nDeb: insere mosquito %s", bufB);
+            adiciona_mosquito(s, bufB);
         }
         else if(!strcmp(buf, "insereagente"))
         {
@@ -144,7 +172,9 @@ static void LoadInstructions(Simulacao* s)
         {
             int i;
             fscanf(s->config, "%d\n", &i);
+            s->steps = i;
             printf("\nDeb: inicia simulacao %d", i);
+            Simulate(s);
         }
         else if(!strcmp(buf, "FIM"))
         {
@@ -156,6 +186,7 @@ static void LoadInstructions(Simulacao* s)
             char bufC[99];
             fscanf(s->config, "%s %s\n", &bufB, &bufC); 
             printf("\nDeb: ligacasas %s %s", bufB, bufC);
+            liga_casas(s, bufB, bufC);
         }
         else
             printf("\nError: %s unmatched", buf);
@@ -165,10 +196,86 @@ static void LoadInstructions(Simulacao* s)
 void Simulate(Simulacao* sim)
 {
     printf("Inicializando simulacao...");
+    mosquito_move();
+    agente_atua();
+    mosquito_bota();
 }
 
 void EndSim(Simulacao* sim)
 {
     fclose(sim->config);
     fclose(sim->log);
+}
+
+
+static void adiciona_casa(Simulacao* s, char* nome)
+{
+    Casa* c = malloc(sizeof(Casa));
+    char* n = malloc(strlen(nome)+1);
+    strcpy(nome, n);
+    if(s->casas != NULL)
+        s->casas->proxCasa = c;
+    else
+        s->casas = c;
+    c->nome = n;
+    c->mosquitos = NULL;
+    c->proxCasa = NULL;
+    c->vizinhos = NULL;
+}
+
+static void adiciona_mosquito(Simulacao* s, char* nome)
+{
+    Casa* c = AchaCasaPeloNome(s, nome);
+    Mosquito* m = malloc(sizeof(Mosquito));
+    if(c->mosquitos != NULL)
+        c->mosquitos->proxMosquito = m;
+    else
+        c->mosquitos = m;
+}
+
+static void mosquito_move()
+{
+    
+}
+
+static void agente_atua()
+{
+    
+}
+
+static void mosquito_bota()
+{
+    
+}
+
+static Casa* AchaCasaPeloNome(Simulacao* s, char* nome)
+{
+    Casa* c = s->casas;
+    while(c != NULL)
+    {
+        if(!strcmp(c->nome, nome))
+            return c;
+        c = c->proxCasa;
+    }
+    return NULL;
+}
+
+static void liga_casas(Simulacao* s, char* c1, char* c2)
+{
+    Casa* casa1 = AchaCasaPeloNome(s, c1);
+    Casa* casa2 = AchaCasaPeloNome(s, c2);
+    Vizinho* vizinhodec1 = malloc(sizeof(Vizinho));
+    vizinhodec1->orig = casa2;
+    vizinhodec1->prox = NULL;
+    if(casa1->vizinhos == NULL)
+        casa1->vizinhos = vizinhodec1;
+    else
+        casa1->vizinhos->prox = vizinhodec1;
+    Vizinho* vizinhodec2 = malloc(sizeof(Vizinho));
+    vizinhodec2->orig = casa1;
+    vizinhodec2->prox = NULL;
+    if(casa2->vizinhos == NULL)
+        casa2->vizinhos = vizinhodec2;
+    else
+        casa2->vizinhos = vizinhodec2;
 }

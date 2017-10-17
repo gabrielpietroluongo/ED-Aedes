@@ -64,17 +64,17 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/src/main.o: src/main.c 
+${OBJECTDIR}/src/main.o: src/main.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.c
 
-${OBJECTDIR}/src/sim.o: src/sim.c 
+${OBJECTDIR}/src/sim.o: src/sim.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sim.o src/sim.c
 
-${OBJECTDIR}/src/utility.o: src/utility.c 
+${OBJECTDIR}/src/utility.o: src/utility.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utility.o src/utility.c
@@ -85,7 +85,6 @@ ${OBJECTDIR}/src/utility.o: src/utility.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes
 
 # Subprojects
 .clean-subprojects:
