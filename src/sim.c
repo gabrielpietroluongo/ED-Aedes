@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../headers/utility.h"
 #include "../headers/sim.h"
 
 #define PATH_CFG "%s/config.txt"
@@ -15,56 +14,17 @@
  */
 
 /*
- * Tipo opaco Casa.
- */
-typedef struct casa Casa;
-
-/*
- * Tipo opaco Mosquito.
- */
-typedef struct mosquito Mosquito;
-
-/*
  * Tipo opaco Agente
  */
 typedef struct agente Agente;
 
-typedef struct vizinho Vizinho;
-
 static void LoadInstructions(Simulacao* s);
-
-static void adiciona_casa(Simulacao* s, char* nome);
-
-static void adiciona_mosquito(Simulacao* s, char* nome);
-
-static void liga_casas(Simulacao* s, char* c1, char* c2);
-
-static Casa* AchaCasaPeloNome(Simulacao* s, char* nome);
 
 static void mosquito_move();
 
 static void agente_atua();
 
 static void mosquito_bota();
-
-struct vizinho
-{
-    Casa* orig;
-    Vizinho* prox;
-};
-
-struct casa
-{
-    char* nome;
-    Casa* proxCasa;
-    Mosquito* mosquitos;
-    Vizinho* vizinhos;
-};
-
-struct mosquito
-{
-    Mosquito* proxMosquito;
-};
 
 struct agente
 {
@@ -74,10 +34,9 @@ struct agente
 
 struct sim
 {
-    FILE* config;
-    FILE* log;
+    FILE *config,*log;
     int steps;
-    Casa* casas;
+    Casa *ini,*fim;
     int movMosquitos;
     int movAgente;
 };
@@ -207,32 +166,6 @@ void EndSim(Simulacao* sim)
     fclose(sim->log);
 }
 
-
-static void adiciona_casa(Simulacao* s, char* nome)
-{
-    Casa* c = malloc(sizeof(Casa));
-    char* n = malloc(strlen(nome)+1);
-    strcpy(nome, n);
-    if(s->casas != NULL)
-        s->casas->proxCasa = c;
-    else
-        s->casas = c;
-    c->nome = n;
-    c->mosquitos = NULL;
-    c->proxCasa = NULL;
-    c->vizinhos = NULL;
-}
-
-static void adiciona_mosquito(Simulacao* s, char* nome)
-{
-    Casa* c = AchaCasaPeloNome(s, nome);
-    Mosquito* m = malloc(sizeof(Mosquito));
-    if(c->mosquitos != NULL)
-        c->mosquitos->proxMosquito = m;
-    else
-        c->mosquitos = m;
-}
-
 static void mosquito_move()
 {
     
@@ -246,36 +179,4 @@ static void agente_atua()
 static void mosquito_bota()
 {
     
-}
-
-static Casa* AchaCasaPeloNome(Simulacao* s, char* nome)
-{
-    Casa* c = s->casas;
-    while(c != NULL)
-    {
-        if(!strcmp(c->nome, nome))
-            return c;
-        c = c->proxCasa;
-    }
-    return NULL;
-}
-
-static void liga_casas(Simulacao* s, char* c1, char* c2)
-{
-    Casa* casa1 = AchaCasaPeloNome(s, c1);
-    Casa* casa2 = AchaCasaPeloNome(s, c2);
-    Vizinho* vizinhodec1 = malloc(sizeof(Vizinho));
-    vizinhodec1->orig = casa2;
-    vizinhodec1->prox = NULL;
-    if(casa1->vizinhos == NULL)
-        casa1->vizinhos = vizinhodec1;
-    else
-        casa1->vizinhos->prox = vizinhodec1;
-    Vizinho* vizinhodec2 = malloc(sizeof(Vizinho));
-    vizinhodec2->orig = casa1;
-    vizinhodec2->prox = NULL;
-    if(casa2->vizinhos == NULL)
-        casa2->vizinhos = vizinhodec2;
-    else
-        casa2->vizinhos = vizinhodec2;
 }
