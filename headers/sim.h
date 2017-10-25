@@ -1,5 +1,7 @@
 #ifndef SIM_H
 #define SIM_H
+#include "../headers/casa.h"
+#include "../headers/utility.h"
 
 /*
  * Este arquivo consiste nas definições gerais e da simulação e sua execução.
