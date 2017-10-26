@@ -108,7 +108,7 @@ static void LoadInstructions(Simulacao* s)
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);
             printf("\nDeb: insere casa %s", bufB);
-            adiciona_casa(&(s->casas.fim), bufB);
+            adiciona_casa(&(s->casas.ini),&(s->casas.fim), bufB);
         }
         else if(!strcmp(buf,"inseremosquito"))
         {

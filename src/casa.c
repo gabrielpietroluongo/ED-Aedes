@@ -23,8 +23,8 @@ struct casa
 {
     char* nome;
     Casa* proxCasa;
-    Sentinela* mosquitos;
-    Sentinela* vizinhos;
+    Sentinela mosquitos;
+    Sentinela vizinhos;
 };
 
 struct mosquito
@@ -33,24 +33,24 @@ struct mosquito
     Mosquito* proxMosquito;
 };
 
-static void adiciona_casa(Casa** casas, char* nome)
+static void adiciona_casa(Casa** ini, Casa** fim, char* nome)
 {
     Casa* c = malloc(sizeof(Casa));
     char* n = malloc(strlen(nome)+1);
     strcpy(nome, n);
     c->nome = n;
-    c->mosquitos = NULL;
+    c->mosquitos.ini = c->mosquitos.fim = NULL;
+    c->vizinhos.ini = c->vizinhos.fim = NULL;
     c->proxCasa = NULL;
-    c->vizinhos = NULL;
-    if(*casas != NULL)
-       (*casas)->proxCasa = c;
+    if(*ini != NULL)
+        (*fim)->proxCasa = *fim = c;
     else
-        *casas = c;
+        *ini = *fim = c;
 }
 
-static void adiciona_mosquito(Sentinela* casas, char* casa, char* nome)
+static void adiciona_mosquito(Casa** ini, Casa** fim, char* casa, char* nome)
 {
-    Casa* c = AchaCasaPeloNome(casas, casa);
+    Casa* c = AchaCasaPeloNome(ini, fim, casa);
     Mosquito* m = malloc(sizeof(Mosquito));
     m->nome=nome;
     m->proxMosquito=NULL;
@@ -61,9 +61,11 @@ static void adiciona_mosquito(Sentinela* casas, char* casa, char* nome)
         c->mosquitos = m;
 }
 
-static Casa* AchaCasaPeloNome(Sentinela* s, char* nome)
+static Casa* AchaCasaPeloNome(Casa** ini, Casa** fim, char* nome)
 {
-    Casa* c = casas;
+    if(*ini == NULL)
+        return NULL;
+    Casa* c = *ini;
     while(c != NULL)
     {
         if(!strcmp(c->nome, nome))

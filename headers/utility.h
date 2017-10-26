@@ -1,6 +1,5 @@
 #ifndef UTILITY_H
 #define UTILITY_H
-#include "../headers/sentinela.h"
 
 /*
  * Este arquivo consiste nas funções utilizadas para utilidades gerais do 
