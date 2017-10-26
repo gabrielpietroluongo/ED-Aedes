@@ -18,11 +18,6 @@
  */
 typedef struct agente Agente;
 
-/* 
- * Tipo opaco Sentinela
- */
-typedef struct sentinela Sentinela;
-
 static void LoadInstructions(Simulacao* s);
 
 static void mosquito_move();
@@ -35,11 +30,6 @@ struct agente
 {
     int id;
     Casa* CasaAtual;
-};
-
-struct sentinela
-{
-    void *ini,*fim;
 };
 
 struct sim

@@ -1,5 +1,6 @@
 #ifndef SIM_H
 #define SIM_H
+#include "../headers/sentinela.h"
 #include "../headers/casa.h"
 #include "../headers/utility.h"
 

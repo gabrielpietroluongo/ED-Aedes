@@ -13,7 +13,7 @@
 
 #ifndef CASA_H
 #define CASA_H
-
+#include "../headers/sentinela.h"
 
 /*
  * Tipo opaco Casa.
@@ -22,7 +22,7 @@ typedef struct casa Casa;
 
 static void adiciona_casa(Casa** casas, char* nome);
 
-static void adiciona_mosquito(char* nome);
+static void adiciona_mosquito(Sentinela* casas, char* nome);
 
 static void liga_casas(Simulacao* s, char* c1, char* c2);
 
