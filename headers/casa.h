@@ -20,14 +20,15 @@
  */
 typedef struct casa Casa;
 
-static void adiciona_casa(Casa** ini, Casa** fim, char* nome);
+void adiciona_casa(Sentinela* casas, char* nome);
 
-static void adiciona_mosquito(Casa** ini, Casa** fim, char* casa, char* nome);
+void adiciona_mosquito(Sentinela* casas, char* casa, int* mCount);
 
-static void liga_casas(Simulacao* s, char* c1, char* c2);
+void liga_casas(Sentinela* s, char* c1, char* c2);
 
-static Casa* AchaCasaPeloNome(Casa** ini, Casa** fim, char* nome);
+static Casa* AchaCasaPeloNome(Sentinela* casas, char* nome);
 
+void PrintaVizinhos(Casa* casa);
 
 #endif /* CASA_H */
 

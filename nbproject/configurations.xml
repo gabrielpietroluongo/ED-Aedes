@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Arquivos de Cabeçalho"
                    projectFiles="true">
+      <itemPath>headers/casa.h</itemPath>
+      <itemPath>headers/sentinela.h</itemPath>
       <itemPath>headers/sim.h</itemPath>
       <itemPath>headers/utility.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Arquivos de Código-Fonte"
                    projectFiles="true">
+      <itemPath>src/casa.c</itemPath>
       <itemPath>src/main.c</itemPath>
+      <itemPath>src/sentinela.c</itemPath>
       <itemPath>src/sim.c</itemPath>
       <itemPath>src/utility.c</itemPath>
     </logicalFolder>
@@ -51,11 +55,19 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="headers/casa.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="headers/sentinela.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="headers/sim.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="headers/utility.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/casa.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="src/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="src/sentinela.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/sim.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -82,11 +94,19 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="headers/casa.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="headers/sentinela.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="headers/sim.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="headers/utility.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/casa.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="src/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="src/sentinela.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/sim.c" ex="false" tool="0" flavor2="0">
       </item>

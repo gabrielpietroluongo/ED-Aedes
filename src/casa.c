@@ -23,77 +23,111 @@ struct casa
 {
     char* nome;
     Casa* proxCasa;
-    Sentinela mosquitos;
-    Sentinela vizinhos;
+    Sentinela* mosquitos;
+    Sentinela* vizinhos;
 };
 
 struct mosquito
 {
-    char* nome; 
+    int id;
     Mosquito* proxMosquito;
 };
 
-static void adiciona_casa(Casa** ini, Casa** fim, char* nome)
+void adiciona_casa(Sentinela* casas, char* nome)
 {
     Casa* c = malloc(sizeof(Casa));
     char* n = malloc(strlen(nome)+1);
-    strcpy(nome, n);
+    strcpy(n, nome);
     c->nome = n;
-    c->mosquitos.ini = c->mosquitos.fim = NULL;
-    c->vizinhos.ini = c->vizinhos.fim = NULL;
+    c->mosquitos = malloc(getSentSize());
+    setIni(c->mosquitos, NULL, TYPE_MOSQUITO);
+    setEnd(c->mosquitos, NULL, TYPE_MOSQUITO);
     c->proxCasa = NULL;
-    if(*ini != NULL)
-        (*fim)->proxCasa = *fim = c;
+    c->vizinhos = malloc(getSentSize());
+    setIni(c->vizinhos, NULL, TYPE_VIZINHO);
+    setEnd(c->vizinhos, NULL, TYPE_VIZINHO);
+
+    if(getIni(casas) == NULL)
+    {
+        setIni(casas, c, TYPE_CASA);
+        setEnd(casas, c, TYPE_CASA);
+        
+    }
     else
-        *ini = *fim = c;
+    {
+        ((Casa*) getEnd(casas))->proxCasa = c;
+        setEnd(casas, c, TYPE_CASA);
+    }
 }
 
-static void adiciona_mosquito(Casa** ini, Casa** fim, char* casa, char* nome)
+void adiciona_mosquito(Sentinela* casas, char* casa, int* mCount)
 {
-    Casa* c = AchaCasaPeloNome(ini, fim, casa);
+    Casa* c = AchaCasaPeloNome(casas, casa);
     Mosquito* m = malloc(sizeof(Mosquito));
-    m->nome=nome;
+    m->id = *mCount;
+    *mCount = *mCount + 1;
+    
     m->proxMosquito=NULL;
-    if(c->mosquitos->ini != NULL){
-        c->mosquitos->fim->proxMosquito = m;
-        c->mosquitos->fim = m;
-    }else
-        c->mosquitos = m;
+    
+    if(getIni(c->mosquitos) == NULL)
+    {
+        setIni(c->mosquitos, m, TYPE_MOSQUITO);
+        setEnd(c->mosquitos, m, TYPE_MOSQUITO);
+    }
+    else
+        ((Mosquito*) getEnd(c->mosquitos))->proxMosquito = m;
 }
 
-static Casa* AchaCasaPeloNome(Casa** ini, Casa** fim, char* nome)
+static Casa* AchaCasaPeloNome(Sentinela* s, char* nome)
 {
-    if(*ini == NULL)
-        return NULL;
-    Casa* c = *ini;
+    Casa* c = getIni(s);
     while(c != NULL)
     {
         if(!strcmp(c->nome, nome))
             return c;
         c = c->proxCasa;
     }
+    printf("\n\n\n\n\nCASA NAO ENCONTRADA %s\n\n\n\n\n", nome);
     return NULL;
 }
 
-static void liga_casas(Sentinela* s, char* c1, char* c2)
+void liga_casas(Sentinela* s, char* c1, char* c2)
 {
     Casa* casa1 = AchaCasaPeloNome(s, c1);
     Casa* casa2 = AchaCasaPeloNome(s, c2);
     Vizinho* vizinhodec1 = malloc(sizeof(Vizinho));
     vizinhodec1->orig = casa2;
     vizinhodec1->prox = NULL;
-    if(casa1->vizinhos == NULL){
-        casa1->vizinhos->ini = vizinhodec1;
-        casa1->vizinhos->fim = vizinhodec1;
-    }else{
-        casa1->vizinhos->fim->prox = vizinhodec1;
-        casa1->vizinhos->fim = vizinhodec1;
+    if(getIni(casa1->vizinhos) == NULL)
+    {
+        setIni(casa1->vizinhos, vizinhodec1, TYPE_VIZINHO);
+        setEnd(casa1->vizinhos, vizinhodec1, TYPE_VIZINHO);
+    }
+    else
+    {
+        ((Vizinho *)getEnd(casa1->vizinhos))->prox = vizinhodec1;
+        setEnd(casa1->vizinhos, vizinhodec1, TYPE_VIZINHO);
     }
     Vizinho* vizinhodec2 = malloc(sizeof(Vizinho));
     vizinhodec2->orig = casa1;
     vizinhodec2->prox = NULL;
-    if(casa2->vizinhos == NULL)
-        casa2->vizinhos = vizinhodec2;
+    if(getIni(casa2->vizinhos) == NULL)
+    {
+        setIni(casa2->vizinhos, vizinhodec2, TYPE_VIZINHO);
+        setEnd(casa2->vizinhos, vizinhodec2, TYPE_VIZINHO);    }
     else
-        casa2->vizinhos = vizinhodec2;
+    {
+        ((Vizinho *)getEnd(casa2->vizinhos))->prox = vizinhodec2;
+        setEnd(casa2->vizinhos, vizinhodec2, TYPE_VIZINHO);
+    }
+}
+
+void PrintaVizinhos(Casa* casa)
+{
+    Vizinho* c = ((Vizinho*) getIni(casa->vizinhos));
+    while(c != NULL)
+    {
+        printf("VIZINHO: %s\n", c->orig->nome);
+        c = c->prox;
+    }
 }

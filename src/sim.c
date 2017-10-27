@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../headers/sim.h"
+#include "../headers/casa.h"
+#include "../headers/sentinela.h"
 
 #define PATH_CFG "%s/config.txt"
 #define PATH_CFG_SIZE 11
@@ -36,9 +38,10 @@ struct sim
 {
     FILE *config,*log;
     int steps;
-    Sentinela casas;
+    Sentinela* casas;
     int movMosquitos;
     int movAgente;
+    int mosquitoCount;
 };
 
 void InitSim(char* path, Simulacao** sim)
@@ -69,7 +72,9 @@ void InitSim(char* path, Simulacao** sim)
     }
     free(path_in);
     free(path_out);
-    *sim = s;    
+    s->casas = InitSentinela(TYPE_CASA);
+    s->mosquitoCount = 0;
+    *sim = s;
     LoadInstructions(s);
     
 }
@@ -108,14 +113,14 @@ static void LoadInstructions(Simulacao* s)
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);
             printf("\nDeb: insere casa %s", bufB);
-            adiciona_casa(&(s->casas.ini),&(s->casas.fim), bufB);
+            adiciona_casa(s->casas, bufB);
         }
         else if(!strcmp(buf,"inseremosquito"))
         {
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);            
             printf("\nDeb: insere mosquito %s", bufB);
-            adiciona_mosquito(s, bufB);
+            adiciona_mosquito(s->casas, bufB, &s->mosquitoCount);
         }
         else if(!strcmp(buf, "insereagente"))
         {
@@ -141,7 +146,7 @@ static void LoadInstructions(Simulacao* s)
             char bufC[99];
             fscanf(s->config, "%s %s\n", &bufB, &bufC); 
             printf("\nDeb: ligacasas %s %s", bufB, bufC);
-            liga_casas(s, bufB, bufC);
+            liga_casas(s->casas, bufB, bufC);
         }
         else
             printf("\nError: %s unmatched", buf);
@@ -150,7 +155,8 @@ static void LoadInstructions(Simulacao* s)
 
 void Simulate(Simulacao* sim)
 {
-    printf("Inicializando simulacao...");
+    printf("Inicializando simulacao...\n");
+    PrintaVizinhos((Casa*)getIni(sim->casas));
     mosquito_move();
     agente_atua();
     mosquito_bota();
