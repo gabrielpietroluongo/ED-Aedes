@@ -22,6 +22,7 @@ struct vizinho
 struct casa
 {
     char* nome;
+    int qntMosquitos;
     Casa* proxCasa;
     Sentinela* mosquitos;
     Sentinela* vizinhos;
@@ -40,6 +41,7 @@ void adiciona_casa(Sentinela* casas, char* nome)
     char* n = malloc(strlen(nome)+1);
     strcpy(n, nome);
     c->nome = n;
+    c->qntMosquitos=0;
     c->mosquitos = malloc(getSentSize());
     setIni(c->mosquitos, NULL, TYPE_MOSQUITO);
     setEnd(c->mosquitos, NULL, TYPE_MOSQUITO);
@@ -77,6 +79,7 @@ void adiciona_mosquito(Sentinela* casas, char* casa, int* mCount)
     }
     else
         ((Mosquito*) getEnd(c->mosquitos))->proxMosquito = m;
+    c->qntMosquitos++;
 }
 
 static Casa* AchaCasaPeloNome(Sentinela* s, char* nome)
@@ -125,15 +128,34 @@ void liga_casas(Sentinela* s, char* c1, char* c2)
 
 void imprime_casa(Casa* casa){
     PrintaVizinhos(casa);
-    PrintaMosquitos()
+    PrintaMosquitos(casa);
 }
 
 void PrintaVizinhos(Casa* casa)
 {
+    printf("%s (vizinhos)",casa->nome);
     Vizinho* c = ((Vizinho*) getIni(casa->vizinhos));
     while(c != NULL)
     {
-        printf("VIZINHO: %s\n", c->orig->nome);
+        printf(" -> %s", c->orig->nome);
         c = c->prox;
     }
+    printf("\n");
+}
+
+void PrintaMosquitos(Casa* casa)
+{
+    printf("%s (mosquitos)",casa->nome);
+    Mosquito* m = (Mosquito*) getIni(casa->mosquitos);
+    if(m == NULL)
+        printf("-> null");
+    else
+    {
+        while(m != NULL)
+        {
+            printf(" -> M%d",m->id);
+            m = m->proxMosquito;
+        }
+    }
+    printf("\n");
 }

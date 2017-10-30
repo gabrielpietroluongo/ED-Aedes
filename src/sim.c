@@ -177,10 +177,16 @@ void imprime_estado(Simulacao* sim){
     Casa* aux=casa;
     while(casa!=NULL){
         imprime_casa(casa);
-        casa=casa->proxCasa;
+        casa = casa->proxCasa;
     }
     casa=aux;
-    imprime_agente(casa);
+    Agente* ag = (Agente*) getIni(sim->agentes);
+    imprime_agente(ag);
+}
+
+void imprime_agente(Agente* ag)
+{
+    
 }
 
 void EndSim(Simulacao* sim)
