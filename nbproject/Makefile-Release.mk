@@ -35,9 +35,14 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/agente.o \
+	${OBJECTDIR}/src/casa.o \
 	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/src/mosquito.o \
+	${OBJECTDIR}/src/sentinela.o \
 	${OBJECTDIR}/src/sim.o \
-	${OBJECTDIR}/src/utility.o
+	${OBJECTDIR}/src/utility.o \
+	${OBJECTDIR}/src/vizinho.o
 
 
 # C Compiler Flags
@@ -64,10 +69,30 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/src/agente.o: src/agente.c
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/agente.o src/agente.c
+
+${OBJECTDIR}/src/casa.o: src/casa.c
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/casa.o src/casa.c
+
 ${OBJECTDIR}/src/main.o: src/main.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.c
+
+${OBJECTDIR}/src/mosquito.o: src/mosquito.c
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/mosquito.o src/mosquito.c
+
+${OBJECTDIR}/src/sentinela.o: src/sentinela.c
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sentinela.o src/sentinela.c
 
 ${OBJECTDIR}/src/sim.o: src/sim.c
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -78,6 +103,11 @@ ${OBJECTDIR}/src/utility.o: src/utility.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utility.o src/utility.c
+
+${OBJECTDIR}/src/vizinho.o: src/vizinho.c
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/vizinho.o src/vizinho.c
 
 # Subprojects
 .build-subprojects:
