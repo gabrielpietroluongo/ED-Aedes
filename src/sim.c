@@ -8,16 +8,10 @@
 #include "../headers/sentinela.h"
 #include "../headers/agente.h"
 
-#define PATH_CFG "%s/config.txt"
-#define PATH_CFG_SIZE 11
+#define PATH_CFG "%s/entrada.txt"
+#define PATH_CFG_SIZE 12
 #define PATH_LOG "%s/log.txt"
 #define PATH_LOG_SIZE 8
-
-/*
- * Creio que o cliente não precisará ter acesso aos tipos abaixo. Caso seja
- * necessário, mover para sim.h .
- */
-
 
 static void LoadInstructions(Simulacao* s);
 
@@ -27,7 +21,7 @@ static void agente_atua(Simulacao* s);
 
 static void mosquito_bota(Simulacao* s);
 
-void imprime_estado(Simulacao* sim);
+static void imprime_inifim(Simulacao* sim, int status);
 
 struct sim
 {
@@ -87,12 +81,6 @@ static void LoadInstructions(Simulacao* s)
         fscanf(s->config, "%s ", &buf);
         if(!strcmp("AGENTE_ATUA", buf))
         {
-            /*
-             * AGENTE_ATUA <movimentos>:
-             * Especifica  o  número  de  movimentações  dos  mosquitos 
-             * (ao  todo)  antes  de  cada  chamada  da  função  agente_atua().
-             * O  número  de  movimentos nunca pode ser 0.
-             */
             int i;
             fscanf(s->config, "%d\n", &i);
             fprintf(s->log,"\nDeb: agente atua %d", i);
@@ -124,6 +112,7 @@ static void LoadInstructions(Simulacao* s)
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);                  
             printf("\nDeb: insere agente %s", bufB);
+            s->agente = InitAgente(AchaCasaPeloNome(s->casas, bufB));
         }
         else if (!strcmp(buf, "iniciasimulacao"))
         {
@@ -152,29 +141,16 @@ static void LoadInstructions(Simulacao* s)
 
 void Simulate(Simulacao* sim)
 {
-    
     printf("Inicializando simulacao...\n");
     int counter = 0;
-    while(counter < sim->steps);
+    imprime_inifim(sim, counter);
+    for(counter; counter < sim->steps; counter++)
     {
-        imprime_estado(sim);
         mosquito_move(sim);
         agente_atua(sim);
         mosquito_bota(sim);
     }
-}
-
-void imprime_estado(Simulacao* sim)
-{
-    if(sim->steps<0)
-    {
-        fprintf(sim->log,"Inicial:\n\n");
-        sim->steps=0;
-    }
-    else
-        fprintf(sim->log,"Final:\n\n");
-    
-    imprime_agente(sim->agente);
+    imprime_inifim(sim, counter);
 }
 
 void EndSim(Simulacao* sim)
@@ -185,11 +161,7 @@ void EndSim(Simulacao* sim)
 
 static void mosquito_move(Simulacao* s)
 {
-    int i = 0;
-    for(i = 0; i < s->mosquitoCount; i++)
-    {
-        
-    }
+    processaMosquitos(s->casas);
 }
 
 static void agente_atua(Simulacao* s)
@@ -200,4 +172,17 @@ static void agente_atua(Simulacao* s)
 static void mosquito_bota(Simulacao* s)
 {
     
+}
+
+static void imprime_inifim(Simulacao* sim, int tipo)
+{
+    if(tipo == 0)
+    {
+        printf("Inicial:\n");
+        imprime_casas(sim->casas);
+        return;
+    }
+    printf("Final:\n");
+    imprime_casas(sim->casas);
+    return;
 }

@@ -14,7 +14,7 @@ struct mosquito
 void adiciona_mosquito(Sentinela* mosquitos, int* mCount)
 {
     Mosquito* m = malloc(sizeof(Mosquito));
-    m->id = *mCount;
+    m->id = (*mCount) + 1;
     *mCount = *mCount + 1;
     m->steps=0;
     m->proxMosquito=NULL;

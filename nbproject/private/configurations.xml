@@ -13,6 +13,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -28,8 +30,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" /home/gabriel/Aedes</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" /home/likewise-open/LCAD/gpietro/Aedes/ </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" /home/likewise-open/LCAD/gpietro/Aedes/</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" /home/gpietro/Aedes/</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" /home/gabriel/Aedes/</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" /home/likewise-open/LCAD/gpietro/Aedes/</runcommand>
+        <runcommand>"${OUTPUT_PATH}" /home/gabriel/Aedes/</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <console-type>1</console-type>

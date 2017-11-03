@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include "../headers/vizinho.h"
 #include "../headers/casa.h"
 #include "../headers/sentinela.h"
@@ -51,4 +52,31 @@ void PrintaVizinhos(Sentinela* vizinhos)
         c = c->prox;
     }
     printf("\n");
+}
+
+Vizinho* achaVizinhoIdeal(Sentinela* vizinhos)
+{
+    int menor = INT_MAX;
+    Vizinho* ideal = NULL;
+    Vizinho* v = getIni(vizinhos);
+    while(v != NULL)
+    {
+        if(getQtdMosquitosCasa(v->orig) < menor)
+        {
+            ideal = v;
+        }
+        else if (getQtdMosquitosCasa(v->orig) == menor)
+        {
+            int cmp = strcmp(getNomeCasa(ideal->orig), getNomeCasa(v->orig));
+            if(cmp > 0) //ideal > v
+                ideal = v;
+        }
+        v = v->prox;
+    }
+    return ideal;
+}
+
+Casa* getCasaVizinho(Vizinho* v)
+{
+    return v->orig;
 }

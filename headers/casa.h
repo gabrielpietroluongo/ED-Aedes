@@ -21,5 +21,13 @@ Sentinela* getVizinhosCasa(Casa* c);
 
 char* getNomeCasa(Casa* c);
 
+int getQtdCasas(Sentinela* casas);
+
+int getQtdMosquitosCasa(Casa* c);
+
+void processaMosquitos(Sentinela* casas);
+
+void moveMosquitos(Casa* orig, Casa* dest);
+
 #endif /* CASA_H */
 

@@ -60,7 +60,9 @@ Casa* AchaCasaPeloNome(Sentinela* s, char* nome)
 
 void imprime_casa(Casa* casa)
 {
+    printf("%s(vizinhos)", casa->nome);
     PrintaVizinhos(casa->vizinhos);
+    printf("%s(mosquitos)", casa->nome);
     PrintaMosquitos(casa->mosquitos);
 }
 
@@ -87,4 +89,46 @@ void imprime_casas(Sentinela* casas)
 char* getNomeCasa(Casa* c)
 {
     return c->nome;
+}
+
+int getQtdCasas(Sentinela* casas)
+{
+    int n;
+    Casa* c = getIni(casas);
+    while(c != NULL)
+    {
+        c = c->proxCasa;
+        n++;
+    }
+    return n;
+}
+
+void processaMosquitos(Sentinela* casas)
+{
+    Casa* c = getIni(casas);
+    while(c != NULL)
+    {
+        Vizinho* ideal;
+        ideal = achaVizinhoIdeal(c->vizinhos);
+        moveMosquitos(c, getCasaVizinho(ideal));
+        c = c->proxCasa;
+    }
+}
+
+void moveMosquitos(Casa* orig, Casa* dest)
+{    
+    //Tem que reescrever essa função pra mover os mosquitos individualmente
+    if(getIni(dest->mosquitos) == NULL)
+    {
+        setIni(dest->mosquitos, getIni(orig->mosquitos), TYPE_MOSQUITO);
+        setIni(orig->mosquitos, NULL, TYPE_MOSQUITO);
+        setEnd(orig->mosquitos, NULL, TYPE_MOSQUITO);
+        return;
+    }
+    
+}
+
+int getQtdMosquitosCasa(Casa* c)
+{
+    return c->qntMosquitos;
 }

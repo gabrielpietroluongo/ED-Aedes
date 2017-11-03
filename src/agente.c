@@ -6,11 +6,17 @@
 
 struct agente
 {
-    int id;
     Casa* CasaAtual;
 };
 
 void imprime_agente(Agente* ag)
 {
-    
+    printf("Agente (%s)", getNomeCasa(ag->CasaAtual));
+}
+
+Agente* InitAgente(Casa* casa)
+{
+    Agente* a = malloc(sizeof(Agente));
+    a->CasaAtual = casa;
+    return a;
 }
