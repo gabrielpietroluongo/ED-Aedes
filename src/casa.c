@@ -110,7 +110,8 @@ void processaMosquitos(Sentinela* casas)
     {
         Vizinho* ideal;
         ideal = achaVizinhoIdeal(c->vizinhos);
-        TransfereMosquitos(c->mosquitos, getCasaVizinho(ideal)->mosquitos, c->nome, getCasaVizinho(ideal)->nome);
+        TransfereMosquitos(c->mosquitos, getCasaVizinho(ideal)->mosquitos, 
+                           c->nome, getCasaVizinho(ideal)->nome);
         c = c->proxCasa;
     }
 }

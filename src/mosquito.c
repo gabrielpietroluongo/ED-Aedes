@@ -51,7 +51,7 @@ void TransfereMosquitos(Sentinela* orig, Sentinela* dest, char* no, char* nd)
     {
         printf("Mosquito M%d %s -> %s", m->id, no, nd);
         AttachaMosquito(m, dest);
-        m = m->proxMosquito;
+        setIni(orig, m->proxMosquito, TYPE_MOSQUITO);
     }
 }
 
@@ -61,6 +61,7 @@ void AttachaMosquito(Mosquito* m, Sentinela* dest)
     {
         setIni(dest, m, TYPE_MOSQUITO);
         setEnd(dest, m, TYPE_MOSQUITO);
+        m->proxMosquito = NULL;
     }
     else
     {

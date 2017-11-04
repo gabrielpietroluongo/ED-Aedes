@@ -46,12 +46,17 @@ void liga_casas(Sentinela* s, char* c1, char* c2)
 void PrintaVizinhos(Sentinela* vizinhos)
 {
     Vizinho* c = ((Vizinho*) getIni(vizinhos));
-    while(c != NULL)
+    if(c == NULL)
+        printf("-> null");
+    else
     {
-        printf(" -> %s", getNomeCasa(c->orig));
-        c = c->prox;
+        while(c != NULL)
+        {
+            printf(" -> %s", getNomeCasa(c->orig));
+            c = c->prox;
+        }
     }
-    printf("\n");
+        printf("\n");
 }
 
 Vizinho* achaVizinhoIdeal(Sentinela* vizinhos)
@@ -64,11 +69,11 @@ Vizinho* achaVizinhoIdeal(Sentinela* vizinhos)
         if(getQtdMosquitosCasa(v->orig) < menor)
         {
             ideal = v;
+            menor = getQtdMosquitosCasa(v->orig);
         }
         else if (getQtdMosquitosCasa(v->orig) == menor)
         {
-            int cmp = strcmp(getNomeCasa(ideal->orig), getNomeCasa(v->orig));
-            if(cmp > 0) //ideal > v
+            if(strcmp(getNomeCasa(ideal->orig), getNomeCasa(v->orig)) > 0)
                 ideal = v;
         }
         v = v->prox;

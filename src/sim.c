@@ -180,6 +180,7 @@ static void imprime_inifim(Simulacao* sim, int tipo)
     {
         printf("Inicial:\n");
         imprime_casas(sim->casas);
+        imprime_agente(sim->agente);
         return;
     }
     printf("Final:\n");

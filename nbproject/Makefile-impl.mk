@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=ED-Aedes
+PROJECTNAME=ED-Aedes-master
 
 # Active Configuration
 DEFAULTCONF=Debug
