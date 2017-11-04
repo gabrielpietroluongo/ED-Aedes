@@ -76,6 +76,28 @@ Vizinho* achaVizinhoIdeal(Sentinela* vizinhos)
     return ideal;
 }
 
+Casa* achaCasaIdealAgente(Sentinela* vizinhos)
+{
+    int maior = INT_MIN;
+    Vizinho* ideal = NULL;
+    Vizinho* v = getIni(vizinhos);
+    while(v != NULL)
+    {
+        if(getQtdMosquitosCasa(v->orig) > maior)
+        {
+            ideal = v;
+        }
+        else if (getQtdMosquitosCasa(v->orig) == maior)
+        {
+            int cmp = strcmp(getNomeCasa(ideal->orig), getNomeCasa(v->orig));
+            if(cmp > 0) //ideal > v
+                ideal = v;
+        }
+        v = v->prox;
+    }
+    return getCasaVizinho(ideal);
+}
+
 Casa* getCasaVizinho(Vizinho* v)
 {
     return v->orig;

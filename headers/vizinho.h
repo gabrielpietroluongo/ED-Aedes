@@ -16,5 +16,9 @@ Vizinho* achaVizinhoIdeal(Sentinela* vizinhos);
 
 Casa* getCasaVizinho(Vizinho* v);
 
+void MataMosquitos(Sentinela* mosquitos);
+
+Casa* achaCasaIdealAgente(Sentinela* vizinhos);
+
 #endif /* VIZINHO_H */
 

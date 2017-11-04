@@ -166,7 +166,7 @@ static void mosquito_move(Simulacao* s)
 
 static void agente_atua(Simulacao* s)
 {
-    
+    ProcessaAgente(s->agente);
 }
 
 static void mosquito_bota(Simulacao* s)

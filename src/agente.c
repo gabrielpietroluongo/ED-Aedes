@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../headers/agente.h"
 #include "../headers/casa.h"
+#include "../headers/vizinho.h"
 
 struct agente
 {
@@ -19,4 +20,11 @@ Agente* InitAgente(Casa* casa)
     Agente* a = malloc(sizeof(Agente));
     a->CasaAtual = casa;
     return a;
+}
+
+void ProcessaAgente(Agente* ag)
+{
+    Casa* c = ag->CasaAtual;
+    c = achaCasaIdealAgente(getVizinhosCasa(c));
+    MataMosquitos(getMosquitosCasa(c));
 }

@@ -110,24 +110,10 @@ void processaMosquitos(Sentinela* casas)
     {
         Vizinho* ideal;
         ideal = achaVizinhoIdeal(c->vizinhos);
-        moveMosquitos(c, getCasaVizinho(ideal));
+        TransfereMosquitos(c->mosquitos, getCasaVizinho(ideal)->mosquitos, c->nome, getCasaVizinho(ideal)->nome);
         c = c->proxCasa;
     }
 }
-
-void moveMosquitos(Casa* orig, Casa* dest)
-{    
-    //Tem que reescrever essa função pra mover os mosquitos individualmente
-    if(getIni(dest->mosquitos) == NULL)
-    {
-        setIni(dest->mosquitos, getIni(orig->mosquitos), TYPE_MOSQUITO);
-        setIni(orig->mosquitos, NULL, TYPE_MOSQUITO);
-        setEnd(orig->mosquitos, NULL, TYPE_MOSQUITO);
-        return;
-    }
-    
-}
-
 int getQtdMosquitosCasa(Casa* c)
 {
     return c->qntMosquitos;

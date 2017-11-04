@@ -43,3 +43,41 @@ void PrintaMosquitos(Sentinela* mosquitos)
     }
     printf("\n");
 }
+
+void TransfereMosquitos(Sentinela* orig, Sentinela* dest, char* no, char* nd)
+{
+    Mosquito* m = getIni(orig);
+    while(m != NULL)
+    {
+        printf("Mosquito M%d %s -> %s", m->id, no, nd);
+        AttachaMosquito(m, dest);
+        m = m->proxMosquito;
+    }
+}
+
+void AttachaMosquito(Mosquito* m, Sentinela* dest)
+{
+    if(getIni(dest) == NULL)
+    {
+        setIni(dest, m, TYPE_MOSQUITO);
+        setEnd(dest, m, TYPE_MOSQUITO);
+    }
+    else
+    {
+        ((Mosquito*) getEnd(dest))->proxMosquito = m;
+        m->proxMosquito = NULL;
+        setEnd(dest, m, TYPE_MOSQUITO);
+    }
+}
+
+void MataMosquitos(Sentinela* mosquitos)
+{
+    Mosquito* m = getIni(mosquitos);
+    Mosquito* m2 = m;
+    while(m != NULL)
+    {
+        m2 = m->proxMosquito;
+        free(m);
+        m = m2;
+    }
+}

@@ -11,5 +11,9 @@ void adiciona_mosquito(Sentinela* mosquitos, int* mCount);
 
 void PrintaMosquitos(Sentinela* mosquitos);
 
+void TransfereMosquitos(Sentinela* orig, Sentinela* dest, char* no, char* nd);
+
+void AttachaMosquito(Mosquito* m, Sentinela* dest);
+
 #endif /* MOSQUITO_H */
 
