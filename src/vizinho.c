@@ -91,6 +91,7 @@ Casa* achaCasaIdealAgente(Sentinela* vizinhos)
         if(getQtdMosquitosCasa(v->orig) > maior)
         {
             ideal = v;
+            maior = getQtdMosquitosCasa(v->orig);
         }
         else if (getQtdMosquitosCasa(v->orig) == maior)
         {

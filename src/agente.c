@@ -12,7 +12,7 @@ struct agente
 
 void imprime_agente(Agente* ag)
 {
-    printf("Agente (%s)", getNomeCasa(ag->CasaAtual));
+    printf("Agente (%s)\n", getNomeCasa(ag->CasaAtual));
 }
 
 Agente* InitAgente(Casa* casa)
@@ -26,5 +26,7 @@ void ProcessaAgente(Agente* ag)
 {
     Casa* c = ag->CasaAtual;
     c = achaCasaIdealAgente(getVizinhosCasa(c));
+    printf("\n Agente %s -> %s", getNomeCasa(ag->CasaAtual), getNomeCasa(c));
+    ag->CasaAtual = c;
     MataMosquitos(getMosquitosCasa(c));
 }

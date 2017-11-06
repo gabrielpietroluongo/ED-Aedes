@@ -49,9 +49,10 @@ void TransfereMosquitos(Sentinela* orig, Sentinela* dest, char* no, char* nd)
     Mosquito* m = getIni(orig);
     while(m != NULL)
     {
-        printf("Mosquito M%d %s -> %s", m->id, no, nd);
+        printf("Mosquito M%d %s -> %s\n", m->id, no, nd);
         AttachaMosquito(m, dest);
         setIni(orig, m->proxMosquito, TYPE_MOSQUITO);
+        m = m->proxMosquito;
     }
 }
 
@@ -78,7 +79,10 @@ void MataMosquitos(Sentinela* mosquitos)
     while(m != NULL)
     {
         m2 = m->proxMosquito;
+        printf("\n MATOU mosquito M%d", m->id);
         free(m);
         m = m2;
     }
+    setIni(mosquitos, NULL, TYPE_MOSQUITO);
+    setEnd(mosquitos, NULL, TYPE_MOSQUITO);
 }
