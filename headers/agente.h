@@ -16,5 +16,7 @@ int getErrosAgente(Agente* a);
 
 int getAcertosAgente(Agente* a);
 
+Casa* getCasaAgente(Agente* a);
+
 #endif /* AGENTE_H */
 

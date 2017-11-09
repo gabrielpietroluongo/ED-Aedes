@@ -56,11 +56,8 @@ void TransfereMosquito(Sentinela* orig, Sentinela* dest, char* no, char* nd, voi
     update(no, nd, s);
     AttachaMosquito(m, dest);
     m->steps ++;
-    if(getSteps(m) % s->mosquitoBota == 0 && getSteps(m) != 0)
-    {
-        notifyBota(m, getNomeCasa(c));
-        mosquito_bota(s, c);
-    }
+    AdicionaMovimentosTotais(s);
+    ProcessaMosquitoBota(getSteps(m), m, nd, s);
 }
 
 void AttachaMosquito(Mosquito* m, Sentinela* dest)
@@ -87,7 +84,7 @@ void MataMosquitos(Sentinela* mosquitos, void* s)
     {
         m2 = m->proxMosquito;
         printf("Agente eliminou o mosquito M%d!\n", m->id);
-        free(m);
+            free(m);
         m = m2;
     }
     setIni(mosquitos, NULL, TYPE_MOSQUITO);
@@ -112,4 +109,9 @@ void printaMosquito(Mosquito* m)
 void notifyBota(Mosquito* m, char* c)
 {
     printf("Mosquito %d botou em %s", m->id, c);
+}
+
+int getMosquitoId(Mosquito* m)
+{
+    return m->id;
 }

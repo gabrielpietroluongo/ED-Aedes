@@ -50,3 +50,8 @@ int getAcertosAgente(Agente* a)
 {
     return a->acertos;
 }
+
+Casa* getCasaAgente(Agente* a)
+{
+    return a->CasaAtual;
+}
