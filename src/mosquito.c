@@ -85,6 +85,8 @@ void MataMosquitos(Sentinela* mosquitos, void* s)
         m2 = m->proxMosquito;
         printf("Agente eliminou o mosquito M%d!\n", m->id);
             free(m);
+        printf("\n MATOU mosquito M%d", m->id);
+        free(m);
         m = m2;
     }
     setIni(mosquitos, NULL, TYPE_MOSQUITO);
