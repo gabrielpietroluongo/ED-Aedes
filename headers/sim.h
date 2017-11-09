@@ -31,5 +31,13 @@ void Simulate(Simulacao* sim);
  */
 void EndSim(Simulacao* sim);
 
+void UpdateMosquitoCount(Simulacao* sim, int delta);
+
+int getMosquitoCount(Simulacao* s);
+
+void update(char* n1, char* n2, Simulacao* s);
+
+int getMosquitoBota(Simulacao* s);
+
 #endif /* SIM_H */
 

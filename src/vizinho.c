@@ -64,8 +64,11 @@ Vizinho* achaVizinhoIdeal(Sentinela* vizinhos)
     int menor = INT_MAX;
     Vizinho* ideal = NULL;
     Vizinho* v = getIni(vizinhos);
+    
     while(v != NULL)
     {
+        if(getQtdMosquitosCasa(v->orig) < 0)
+            SetMosquitosCasa(v->orig, 0);
         if(getQtdMosquitosCasa(v->orig) < menor)
         {
             ideal = v;
@@ -91,6 +94,7 @@ Casa* achaCasaIdealAgente(Sentinela* vizinhos)
         if(getQtdMosquitosCasa(v->orig) > maior)
         {
             ideal = v;
+            maior = getQtdMosquitosCasa(v->orig);
         }
         else if (getQtdMosquitosCasa(v->orig) == maior)
         {

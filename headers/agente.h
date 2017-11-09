@@ -10,7 +10,11 @@ void imprime_agente(Agente* ag);
 
 Agente* InitAgente(Casa* casa);
 
-void ProcessaAgente(Agente* ag);
+int ProcessaAgente(Agente* ag, void* s);
+
+int getErrosAgente(Agente* a);
+
+int getAcertosAgente(Agente* a);
 
 #endif /* AGENTE_H */
 

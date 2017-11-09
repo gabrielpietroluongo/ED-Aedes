@@ -110,5 +110,15 @@ int getQtdMosquitosCasa(Casa* c)
 
 Casa* getProxCasa(Casa* c)
 {
-    return c->proxCasa;
+    return (Casa*) c->proxCasa;
+}
+
+void UpdateMosquitosCasa(Casa* c, int delta)
+{
+    c->qntMosquitos += delta;
+}
+
+void SetMosquitosCasa(Casa* c, int delta)
+{
+    c->qntMosquitos = delta;
 }
