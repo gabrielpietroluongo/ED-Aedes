@@ -185,7 +185,6 @@ static void mosquito_move(Simulacao* s)
                                   getMosquitosCasa(getCasaVizinho(ideal)), 
                                   getNomeCasa(c), 
                                   getNomeCasa(getCasaVizinho(ideal)), s);
-                //s->movimentosTotais++;
                 if(!(s->movimentosTotais % s->agenteAtua) )
                     agente_atua(s);
             }
@@ -214,10 +213,15 @@ void ProcessaMosquitoBota(int steps, void* m, char* c, Simulacao* s)
 {
     Casa* casa = AchaCasaPeloNome(s->casas, c);
     Casa* casa2 = achaCasaIdealAgente(getVizinhosCasa(getCasaAgente(s->agente)));
-    if(getMosquitoId(m) == 9)
-        printf("");
-    if(steps % s->mosquitoBota == 0 && (casa2 != casa))
+    if(steps % s->mosquitoBota == 0)
     {
+        if(s->movimentosTotais % s->agenteAtua == 0)
+        {
+            if(casa2 == casa)
+            {
+                return;
+            }
+        }
         //notifyBota(m, getNomeCasa(casa));
         //printaMosquito(m);
         //printf(" botou M%d, M%d em %s - %d steps\n", s->mosquitoCount+1, s->mosquitoCount+2, c, getSteps(m));
