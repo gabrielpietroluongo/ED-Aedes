@@ -19,7 +19,7 @@ static void mosquito_move(Simulacao* s);
 
 static void agente_atua(Simulacao* s);
 
-static void mosquito_bota(Simulacao* s);
+static void mosquito_bota(Simulacao* s, Casa* casa);
 
 static void imprime_inifim(Simulacao* sim, int status);
 
@@ -32,6 +32,9 @@ struct sim
     int mosquitoBota;
     int agenteAtua;
     int mosquitoCount;
+    int mosquitosIniciais;
+    int movimentosTotais;
+    int mosquitosAtuais;
 };
 
 void InitSim(char* path, Simulacao** sim)
@@ -64,6 +67,8 @@ void InitSim(char* path, Simulacao** sim)
     free(path_out);
     s->casas = InitSentinela(TYPE_CASA);
     s->mosquitoCount = 0;
+    s->mosquitosAtuais = 0;
+    s->mosquitosIniciais = 0;
     s->agente = NULL;
     *sim = s;
     LoadInstructions(s);
@@ -83,35 +88,37 @@ static void LoadInstructions(Simulacao* s)
         {
             int i;
             fscanf(s->config, "%d\n", &i);
-            fprintf(s->log,"\nDeb: agente atua %d", i);
+            //fprintf(s->log,"\nDeb: agente atua %d", i);
             s->agenteAtua = i;
         }
         else if (!strcmp("MOSQUITO_BOTA", buf))
         {
             int i;
             fscanf(s->config, "%d\n", &i);
-            printf("\nDeb: mosquito bota %d", i);
+            //printf("\nDeb: mosquito bota %d", i);
             s->mosquitoBota = i;
         }
         else if (!strcmp(buf, "inserecasa"))
         {
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);
-            printf("\nDeb: insere casa %s", bufB);
+            //printf("\nDeb: insere casa %s", bufB);
             adiciona_casa(s->casas, bufB);
         }
         else if(!strcmp(buf,"inseremosquito"))
         {
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);            
-            printf("\nDeb: insere mosquito %s", bufB);
+            //printf("\nDeb: insere mosquito %s", bufB);
             adiciona_mosquito(getMosquitosCasa(AchaCasaPeloNome(s->casas, bufB)), &s->mosquitoCount);
+            s->mosquitosAtuais++;
+            UpdateMosquitosCasa(AchaCasaPeloNome(s->casas, bufB) ,1);
         }
         else if(!strcmp(buf, "insereagente"))
         {
             char bufB[99];
             fscanf(s->config, "%s\n", &bufB);                  
-            printf("\nDeb: insere agente %s", bufB);
+            //printf("\nDeb: insere agente %s", bufB);
             s->agente = InitAgente(AchaCasaPeloNome(s->casas, bufB));
         }
         else if (!strcmp(buf, "iniciasimulacao"))
@@ -119,19 +126,19 @@ static void LoadInstructions(Simulacao* s)
             int i;
             fscanf(s->config, "%d\n", &i);
             s->steps=i;
-            printf("\nDeb: inicia simulacao %d", i);
+            //printf("\nDeb: inicia simulacao %d", i);
             Simulate(s);
         }
         else if(!strcmp(buf, "FIM"))
         {
-            printf("\nDeb: FIM");
+            //printf("\nDeb: FIM");
         }
         else if(!strcmp(buf, "ligacasas"))
         {
             char bufB[99];
             char bufC[99];
             fscanf(s->config, "%s %s\n", &bufB, &bufC); 
-            printf("\nDeb: ligacasas %s %s", bufB, bufC);
+            //printf("\nDeb: ligacasas %s %s", bufB, bufC);
             liga_casas(s->casas, bufB, bufC);
         }
         else
@@ -141,49 +148,126 @@ static void LoadInstructions(Simulacao* s)
 
 void Simulate(Simulacao* sim)
 {
-    printf("Inicializando simulacao...\n");
-    int counter = 0;
-    imprime_inifim(sim, counter);
-    for(counter; counter < sim->steps; counter++)
-    {
-        mosquito_move(sim);
-        agente_atua(sim);
-        mosquito_bota(sim);
-    }
-    imprime_inifim(sim, counter);
+    //printf("Inicializando simulacao...\n");
+    sim->mosquitosIniciais = sim->mosquitoCount;
+    sim->mosquitosAtuais = sim->mosquitoCount;
+    imprime_inifim(sim, 0);
+    printf("\n");
+    mosquito_move(sim);
+    imprime_inifim(sim, 1);
+    imprime_agente(sim->agente);
+    printf("Número de mosquitos iniciais: %d\n", sim->mosquitosIniciais);
+    printf("Número de mosquitos finais: %d\n", sim->mosquitosAtuais);
+    printf("Número de movimentos totais dos mosquitos: %d\n", sim->movimentosTotais);
+    printf("Número de erros dos agentes: %d\n", getErrosAgente(sim->agente));
+    printf("Número de acertos dos agentes: %d", getAcertosAgente(sim->agente));
+    
 }
 
 void EndSim(Simulacao* sim)
 {
-    fclose(sim->config);
     fclose(sim->log);
 }
 
 static void mosquito_move(Simulacao* s)
 {
-    processaMosquitos(s->casas);
+    while(s->movimentosTotais < s->steps && s->mosquitosAtuais > 0)
+    {
+        //printf("\n%d\n", s->movimentosTotais);
+        Casa* c = (Casa*) getIni(s->casas);
+        while(c != NULL && s->mosquitosAtuais > 0 && s->movimentosTotais < s->steps)
+        {
+            while(getIni(getMosquitosCasa(c)) != NULL && s->movimentosTotais < s->steps)
+            {
+                Vizinho* ideal;
+                ideal = achaVizinhoIdeal(getVizinhosCasa(c));
+                TransfereMosquito(getMosquitosCasa(c), 
+                                  getMosquitosCasa(getCasaVizinho(ideal)), 
+                                  getNomeCasa(c), 
+                                  getNomeCasa(getCasaVizinho(ideal)), s);
+                if(!(s->movimentosTotais % s->agenteAtua) )
+                    agente_atua(s);
+            }
+            c = (Casa*) getProxCasa(c);
+        }
+    }
+        
 }
 
 static void agente_atua(Simulacao* s)
 {
-    ProcessaAgente(s->agente);
+    s->mosquitosAtuais -= ProcessaAgente(s->agente, s);
 }
 
-static void mosquito_bota(Simulacao* s)
+static void mosquito_bota(Simulacao* s, Casa* casa)
 {
-    
+    //printf("\nMosquito botou em %s\n", getNomeCasa(casa));
+    adiciona_mosquito(getMosquitosCasa(casa), &s->mosquitoCount);
+
+    adiciona_mosquito(getMosquitosCasa(casa), &s->mosquitoCount);
+    UpdateMosquitosCasa(casa, 2);
+    s->mosquitosAtuais += 2;
+}
+
+void ProcessaMosquitoBota(int steps, void* m, char* c, Simulacao* s)
+{
+    Casa* casa = AchaCasaPeloNome(s->casas, c);
+    Casa* casa2 = achaCasaIdealAgente(getVizinhosCasa(getCasaAgente(s->agente)));
+    if(steps % s->mosquitoBota == 0)
+    {
+        if(s->movimentosTotais % s->agenteAtua == 0)
+        {
+            if(casa2 == casa)
+            {
+                return;
+            }
+        }
+        //notifyBota(m, getNomeCasa(casa));
+        //printaMosquito(m);
+        //printf(" botou M%d, M%d em %s - %d steps\n", s->mosquitoCount+1, s->mosquitoCount+2, c, getSteps(m));
+        mosquito_bota(s, casa);
+    }
 }
 
 static void imprime_inifim(Simulacao* sim, int tipo)
 {
     if(tipo == 0)
     {
-        printf("Inicial:\n");
+        printf("Inicial:\n\n");
         imprime_casas(sim->casas);
         imprime_agente(sim->agente);
         return;
     }
-    printf("Final:\n");
+    printf("\nFinal:\n\n");
     imprime_casas(sim->casas);
     return;
+}
+
+void UpdateMosquitoCount(Simulacao* sim, int delta)
+{
+    sim->mosquitoCount += delta;
+}
+
+int getMosquitoCount(Simulacao* s)
+{
+    return s->mosquitoCount;
+}
+
+void update(char* n1, char* n2, Simulacao* s)
+{
+    Casa* c1 = AchaCasaPeloNome(s->casas, n1);
+    Casa* c2 = AchaCasaPeloNome(s->casas, n2);
+    UpdateMosquitosCasa(c1, -1);
+    UpdateMosquitosCasa(c2, 1);
+}
+
+int getMosquitoBota(Simulacao* s)
+{
+    return s->mosquitoBota;
+}
+
+
+void AdicionaMovimentosTotais(Simulacao* s)
+{
+    s->movimentosTotais++;
 }

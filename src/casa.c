@@ -103,19 +103,22 @@ int getQtdCasas(Sentinela* casas)
     return n;
 }
 
-void processaMosquitos(Sentinela* casas)
-{
-    Casa* c = getIni(casas);
-    while(c != NULL)
-    {
-        Vizinho* ideal;
-        ideal = achaVizinhoIdeal(c->vizinhos);
-        TransfereMosquitos(c->mosquitos, getCasaVizinho(ideal)->mosquitos, 
-                           c->nome, getCasaVizinho(ideal)->nome);
-        c = c->proxCasa;
-    }
-}
 int getQtdMosquitosCasa(Casa* c)
 {
     return c->qntMosquitos;
+}
+
+Casa* getProxCasa(Casa* c)
+{
+    return (Casa*) c->proxCasa;
+}
+
+void UpdateMosquitosCasa(Casa* c, int delta)
+{
+    c->qntMosquitos += delta;
+}
+
+void SetMosquitosCasa(Casa* c, int delta)
+{
+    c->qntMosquitos = delta;
 }

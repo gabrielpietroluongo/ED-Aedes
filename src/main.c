@@ -3,7 +3,6 @@
 #include "../headers/utility.h"
 #include "../headers/sim.h"
 
-
 int main(int argc, char** argv) 
 {
     //Inicializa o caminho de I/O da simulação

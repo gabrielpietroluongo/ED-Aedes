@@ -17,6 +17,8 @@ Casa* AchaCasaPeloNome(Sentinela* casas, char* nome);
 
 Sentinela* getMosquitosCasa(Casa* c);
 
+void UpdateMosquitosCasa(Casa* c, int delta);
+
 Sentinela* getVizinhosCasa(Casa* c);
 
 char* getNomeCasa(Casa* c);
@@ -28,6 +30,10 @@ int getQtdMosquitosCasa(Casa* c);
 void processaMosquitos(Sentinela* casas);
 
 void moveMosquitos(Casa* orig, Casa* dest);
+
+Casa* getProxCasa(Casa* c);
+
+void SetMosquitosCasa(Casa* c, int delta);
 
 #endif /* CASA_H */
 
