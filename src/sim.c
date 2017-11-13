@@ -43,12 +43,12 @@ void InitSim(char* path, Simulacao** sim)
     /* 
      * Exemplo de caminho de entrada:
      * /home/pessoa/simulacao/
-     * Dentro dessa pasta deve existir um arquivo chamado config.txt.
+     * Dentro dessa pasta deve existir um arquivo chamado entrada.txt.
      */
     char* path_in = malloc(strlen(path) + PATH_CFG_SIZE + 1);
     
     char* path_out = malloc(strlen(path) + PATH_LOG_SIZE + 1);
-    printf("%s", path_in);
+    //printf("%s", path_in);
     sprintf(path_in, PATH_CFG, path);
     sprintf(path_out, PATH_LOG, path);
     s->config = fopen(path_in, "r");
@@ -158,9 +158,9 @@ void Simulate(Simulacao* sim)
     imprime_agente(sim->agente);
     printf("Número de mosquitos iniciais: %d\n", sim->mosquitosIniciais);
     printf("Número de mosquitos finais: %d\n", sim->mosquitosAtuais);
-    printf("Número de movimentos totais dos mosquitos: %d\n", sim->movimentosTotais);
-    printf("Número de erros dos agentes: %d\n", getErrosAgente(sim->agente));
-    printf("Número de acertos dos agentes: %d", getAcertosAgente(sim->agente));
+    printf(sim->log, "Número de movimentos totais dos mosquitos: %d\n", sim->movimentosTotais);
+    printf(sim->log, "Número de erros dos agentes: %d\n", getErrosAgente(sim->agente));
+    printf(sim->log, "Número de acertos dos agentes: %d", getAcertosAgente(sim->agente));
     
 }
 

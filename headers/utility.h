@@ -14,7 +14,5 @@
  */
 void ChecaArgs(int argc, char** argv, char** path);
 
-void Log_and_Print(char* msg);
-
 #endif /* UTILITY_H */
 

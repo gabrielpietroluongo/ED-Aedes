@@ -43,5 +43,7 @@ void ProcessaMosquitoBota(int steps, void* m, char* c, Simulacao* s);
 
 void AdicionaMovimentosTotais(Simulacao* s);
 
+void LogaInformacao(char* msg);
+
 #endif /* SIM_H */
 
