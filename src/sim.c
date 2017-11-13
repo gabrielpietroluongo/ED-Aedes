@@ -53,6 +53,7 @@ void InitSim(char* path, Simulacao** sim)
     sprintf(path_out, PATH_LOG, path);
     s->config = fopen(path_in, "r");
     s->log = fopen(path_out, "w");
+    GLOBAL_log = s->log;
     if(s->config == NULL)
     {
         printf("ERRO: Nao foi possivel abrir o arquivo de configuracao!");
@@ -152,15 +153,15 @@ void Simulate(Simulacao* sim)
     sim->mosquitosIniciais = sim->mosquitoCount;
     sim->mosquitosAtuais = sim->mosquitoCount;
     imprime_inifim(sim, 0);
-    printf("\n");
+    fprintf(GLOBAL_log, "\n");
     mosquito_move(sim);
     imprime_inifim(sim, 1);
     imprime_agente(sim->agente);
-    printf("Número de mosquitos iniciais: %d\n", sim->mosquitosIniciais);
-    printf("Número de mosquitos finais: %d\n", sim->mosquitosAtuais);
-    printf(sim->log, "Número de movimentos totais dos mosquitos: %d\n", sim->movimentosTotais);
-    printf(sim->log, "Número de erros dos agentes: %d\n", getErrosAgente(sim->agente));
-    printf(sim->log, "Número de acertos dos agentes: %d", getAcertosAgente(sim->agente));
+    fprintf(sim->log, "Numero de mosquitos iniciais: %d\n", sim->mosquitosIniciais);
+    fprintf(sim->log, "Numero de mosquitos finais: %d\n", sim->mosquitosAtuais);
+    fprintf(sim->log, "Numero de movimentos totais dos mosquitos: %d\n", sim->movimentosTotais);
+    fprintf(sim->log, "Numero de erros dos agentes: %d\n", getErrosAgente(sim->agente));
+    fprintf(sim->log, "Numero de acertos dos agentes: %d", getAcertosAgente(sim->agente));
     
 }
 
@@ -236,12 +237,12 @@ static void imprime_inifim(Simulacao* sim, int tipo)
 {
     if(tipo == 0)
     {
-        printf("Inicial:\n\n");
+        fprintf(GLOBAL_log, "Inicial:\n\n");
         imprime_casas(sim->casas);
         imprime_agente(sim->agente);
         return;
     }
-    printf("\nFinal:\n\n");
+    fprintf(GLOBAL_log, "\nFinal:\n\n");
     imprime_casas(sim->casas);
     return;
 }

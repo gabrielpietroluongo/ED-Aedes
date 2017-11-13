@@ -5,6 +5,8 @@
 #include "../headers/vizinho.h"
 #include "../headers/casa.h"
 #include "../headers/sentinela.h"
+#include "../headers/utility.h"
+
 
 struct vizinho
 {
@@ -47,16 +49,16 @@ void PrintaVizinhos(Sentinela* vizinhos)
 {
     Vizinho* c = ((Vizinho*) getIni(vizinhos));
     if(c == NULL)
-        printf("-> null");
+        fprintf(GLOBAL_log, "-> null");
     else
     {
         while(c != NULL)
         {
-            printf(" -> %s", getNomeCasa(c->orig));
+            fprintf(GLOBAL_log," -> %s", getNomeCasa(c->orig));
             c = c->prox;
         }
     }
-        printf("\n");
+        fprintf(GLOBAL_log, "\n");
 }
 
 Vizinho* achaVizinhoIdeal(Sentinela* vizinhos)

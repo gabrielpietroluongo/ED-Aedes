@@ -4,6 +4,8 @@
 #include "../headers/casa.h"
 #include "../headers/vizinho.h"
 #include "../headers/mosquito.h"
+#include "../headers/utility.h"
+
 
 Casa* AchaCasaPeloNome(Sentinela* casas, char* nome);
 
@@ -60,9 +62,9 @@ Casa* AchaCasaPeloNome(Sentinela* s, char* nome)
 
 void imprime_casa(Casa* casa)
 {
-    printf("%s(vizinhos)", casa->nome);
+    fprintf(GLOBAL_log, "%s(vizinhos)", casa->nome);
     PrintaVizinhos(casa->vizinhos);
-    printf("%s(mosquitos)", casa->nome);
+    fprintf(GLOBAL_log, "%s(mosquitos)", casa->nome);
     PrintaMosquitos(casa->mosquitos);
 }
 

@@ -6,6 +6,7 @@
 #include "../headers/vizinho.h"
 #include "../headers/sentinela.h"
 #include "../headers/mosquito.h"
+#include "../headers/utility.h"
 
 struct agente
 {
@@ -16,7 +17,7 @@ struct agente
 
 void imprime_agente(Agente* ag)
 {
-    printf("Agente (%s)\n", getNomeCasa(ag->CasaAtual));
+    fprintf(GLOBAL_log, "Agente (%s)\n", getNomeCasa(ag->CasaAtual));
 }
 
 Agente* InitAgente(Casa* casa)
@@ -32,7 +33,7 @@ int ProcessaAgente(Agente* ag, void* s)
 {
     Casa* c = ag->CasaAtual;
     c = achaCasaIdealAgente(getVizinhosCasa(c));
-    printf("Agente %s -> %s\n", getNomeCasa(ag->CasaAtual), getNomeCasa(c));
+    fprintf(GLOBAL_log, "Agente %s -> %s\n", getNomeCasa(ag->CasaAtual), getNomeCasa(c));
     ag->CasaAtual = c;
     int q = getQtdMosquitosCasa(c);
     if(!q) ag->erros++; else ag->acertos++;

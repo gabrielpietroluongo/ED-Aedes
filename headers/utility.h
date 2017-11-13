@@ -2,6 +2,8 @@
 #define UTILITY_H
 #include "../headers/sentinela.h"
 
+FILE* GLOBAL_log;
+
 /*
  * Este arquivo consiste nas funções utilizadas para utilidades gerais do 
  * programa.

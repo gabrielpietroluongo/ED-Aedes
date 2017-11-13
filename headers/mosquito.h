@@ -21,8 +21,6 @@ int getSteps(Mosquito* m);
 
 Mosquito* getProxMosquito(Mosquito* m);
 
-void notifyBota(Mosquito* m, char* c);
-
 int getMosquitoId(Mosquito* m);
 
 void liberaMosquitos(Sentinela* m);

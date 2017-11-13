@@ -4,6 +4,8 @@
 #include "../headers/mosquito.h"
 #include "../headers/sentinela.h"
 #include "../headers/sim.h"
+#include "../headers/utility.h"
+
 
 struct mosquito
 {
@@ -36,22 +38,22 @@ void PrintaMosquitos(Sentinela* mosquitos)
 {
     Mosquito* m = (Mosquito*) getIni(mosquitos);
     if(m == NULL)
-        printf(" -> null");
+        fprintf(GLOBAL_log, " -> null");
     else
     {
         while(m != NULL)
         {
-            printf(" -> M%d",m->id);
+            fprintf(GLOBAL_log, " -> M%d",m->id);
             m = m->proxMosquito;
         }
     }
-    printf("\n");
+    fprintf(GLOBAL_log, "\n");
 }
 
 void TransfereMosquito(Sentinela* orig, Sentinela* dest, char* no, char* nd, void* s)
 {
     Mosquito* m = (Mosquito*) getIni(orig);
-    printf("Mosquito M%d %s -> %s\n", m->id, no, nd);
+    fprintf(GLOBAL_log, "Mosquito M%d %s -> %s\n", m->id, no, nd);
     setIni(orig, m->proxMosquito, TYPE_MOSQUITO);
     update(no, nd, s);
     AttachaMosquito(m, dest);
@@ -83,9 +85,8 @@ void MataMosquitos(Sentinela* mosquitos, void* s)
     while(m != NULL)
     {
         m2 = m->proxMosquito;
-        printf("Agente eliminou o mosquito M%d!\n", m->id);
+        fprintf(GLOBAL_log, "Agente eliminou o mosquito M%d!\n", m->id);
             free(m);
-        printf("\n MATOU mosquito M%d", m->id);
         free(m);
         m = m2;
     }
@@ -105,12 +106,7 @@ Mosquito* getProxMosquito(Mosquito* m)
 
 void printaMosquito(Mosquito* m)
 {
-    printf("Mosquito %d", m->id);
-}
-
-void notifyBota(Mosquito* m, char* c)
-{
-    printf("Mosquito %d botou em %s", m->id, c);
+    fprintf(GLOBAL_log, "Mosquito %d", m->id);
 }
 
 int getMosquitoId(Mosquito* m)
