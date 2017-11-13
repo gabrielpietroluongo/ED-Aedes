@@ -18,5 +18,7 @@ int getAcertosAgente(Agente* a);
 
 Casa* getCasaAgente(Agente* a);
 
+void liberaAgente(Agente* s);
+
 #endif /* AGENTE_H */
 

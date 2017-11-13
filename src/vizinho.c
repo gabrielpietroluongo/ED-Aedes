@@ -111,3 +111,16 @@ Casa* getCasaVizinho(Vizinho* v)
 {
     return v->orig;
 }
+
+void liberaVizinhos(Sentinela* vizinhos)
+{
+    Vizinho* v = getIni(vizinhos);
+    Vizinho* prox = NULL;
+    while(v != NULL)
+    {
+        prox = v->prox;
+        free(v);
+        v = prox;
+    }
+    free(vizinhos);
+}

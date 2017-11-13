@@ -117,3 +117,16 @@ int getMosquitoId(Mosquito* m)
 {
     return m->id;
 }
+
+void liberaMosquitos(Sentinela* m)
+{
+    Mosquito* mosquito = getIni(m);
+    Mosquito* prox = NULL;
+    while(mosquito != NULL)
+    {
+        prox = mosquito->proxMosquito;
+        free(mosquito);
+        mosquito = prox;
+    }
+    free(m);
+}

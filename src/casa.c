@@ -122,3 +122,21 @@ void SetMosquitosCasa(Casa* c, int delta)
 {
     c->qntMosquitos = delta;
 }
+
+void liberaCasas(Sentinela* s)
+{
+    Casa* c = getIni(s);
+    
+    Casa* prox = NULL;
+    while(c != NULL)
+    {
+        
+        prox = c->proxCasa;
+        liberaMosquitos(c->mosquitos);
+        free(c->nome);
+        liberaVizinhos(c->vizinhos);
+        free(c);
+        c = prox;
+    }
+    free(s);
+}

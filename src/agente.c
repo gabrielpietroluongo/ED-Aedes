@@ -55,3 +55,8 @@ Casa* getCasaAgente(Agente* a)
 {
     return a->CasaAtual;
 }
+
+void liberaAgente(Agente* s)
+{
+    free(s);
+}

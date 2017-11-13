@@ -63,48 +63,48 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes-master
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes-master: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes-master ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/src/agente.o: src/agente.c 
+${OBJECTDIR}/src/agente.o: src/agente.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/agente.o src/agente.c
 
-${OBJECTDIR}/src/casa.o: src/casa.c 
+${OBJECTDIR}/src/casa.o: src/casa.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/casa.o src/casa.c
 
-${OBJECTDIR}/src/main.o: src/main.c 
+${OBJECTDIR}/src/main.o: src/main.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.c
 
-${OBJECTDIR}/src/mosquito.o: src/mosquito.c 
+${OBJECTDIR}/src/mosquito.o: src/mosquito.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/mosquito.o src/mosquito.c
 
-${OBJECTDIR}/src/sentinela.o: src/sentinela.c 
+${OBJECTDIR}/src/sentinela.o: src/sentinela.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sentinela.o src/sentinela.c
 
-${OBJECTDIR}/src/sim.o: src/sim.c 
+${OBJECTDIR}/src/sim.o: src/sim.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sim.o src/sim.c
 
-${OBJECTDIR}/src/utility.o: src/utility.c 
+${OBJECTDIR}/src/utility.o: src/utility.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utility.o src/utility.c
 
-${OBJECTDIR}/src/vizinho.o: src/vizinho.c 
+${OBJECTDIR}/src/vizinho.o: src/vizinho.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/vizinho.o src/vizinho.c
@@ -115,7 +115,6 @@ ${OBJECTDIR}/src/vizinho.o: src/vizinho.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ed-aedes
 
 # Subprojects
 .clean-subprojects:

@@ -166,7 +166,10 @@ void Simulate(Simulacao* sim)
 
 void EndSim(Simulacao* sim)
 {
+    liberaAgente(sim->agente);
+    liberaCasas(sim->casas);
     fclose(sim->log);
+    free(sim);
 }
 
 static void mosquito_move(Simulacao* s)

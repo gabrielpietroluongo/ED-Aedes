@@ -18,5 +18,7 @@ Casa* getCasaVizinho(Vizinho* v);
 
 Casa* achaCasaIdealAgente(Sentinela* vizinhos);
 
+void liberaVizinhos(Sentinela* vizinhos);
+
 #endif /* VIZINHO_H */
 

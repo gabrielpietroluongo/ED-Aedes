@@ -25,5 +25,7 @@ void notifyBota(Mosquito* m, char* c);
 
 int getMosquitoId(Mosquito* m);
 
+void liberaMosquitos(Sentinela* m);
+
 #endif /* MOSQUITO_H */
 

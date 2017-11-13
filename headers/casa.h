@@ -35,5 +35,7 @@ Casa* getProxCasa(Casa* c);
 
 void SetMosquitosCasa(Casa* c, int delta);
 
+void liberaCasas(Sentinela* s);
+
 #endif /* CASA_H */
 
