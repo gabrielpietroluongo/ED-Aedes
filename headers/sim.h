@@ -47,19 +47,42 @@ void Simulate(Simulacao* sim);
  */
 void EndSim(Simulacao* sim);
 
+/*
+ * Atualiza a quantidade de mosquitos globais da simulação
+ */
 void UpdateMosquitoCount(Simulacao* sim, int delta);
 
+/*
+ * Retorna a quantidade de mosquitos globais da simulação
+ */
 int getMosquitoCount(Simulacao* s);
 
+/*
+ * Atualiza a contagem de mosquitos de duas casas (chamada no movimento de 
+ * mosquitos de uma casa 1 para uma casa 2). Mantém a contagem de mosquitos
+ * na simulação consistente
+ */
 void update(char* n1, char* n2, Simulacao* s);
 
+/*
+ * Retorna a quantidade de movimentos necessários para qualquer mosquito botar 
+ * ovos
+ */
 int getMosquitoBota(Simulacao* s);
 
+/*
+ * Faz o processamento de quando o mosquito deve botar ovos. 
+ * int steps: Quantidade de passos atuais do mosquito
+ * void* m: Referência para o mosquito que está sendo processado
+ * char* c: Nome da casa atual do mosquito
+ * Simulacao* s: Referência para a instância da simulação
+ */
 void ProcessaMosquitoBota(int steps, void* m, char* c, Simulacao* s);
 
+/*
+ * Incrementa a quantidade de movimentos totais da simulação em 1
+ */
 void AdicionaMovimentosTotais(Simulacao* s);
-
-void LogaInformacao(char* msg);
 
 #endif /* SIM_H */
 

@@ -48,8 +48,8 @@ static void mosquito_move(Simulacao* s);
 static void agente_atua(Simulacao* s);
 
 /*
- * mosquito_bota(): Funcao que faz um mosquito reproduzir dentro de uma casa, 
- * gerando mais dois mosquitos na mesma
+ * mosquito_bota(): Funcao estática que faz um mosquito reproduzir dentro de 
+ * uma casa, gerando mais dois mosquitos na mesma
  * 
  * inputs: s (ponteiro de Simulacao que contem os dados da simulacao) e casa (
  *         ponteiro da casa onde o mosquito reproduziu)
@@ -61,6 +61,10 @@ static void agente_atua(Simulacao* s);
  */
 static void mosquito_bota(Simulacao* s, Casa* casa);
 
+/*
+ * Imprime o estado atual da simulação, sendo o status 0 (início) ou não-zero
+ * (fim)
+ */
 static void imprime_inifim(Simulacao* sim, int status);
 
 struct sim
@@ -263,9 +267,6 @@ void ProcessaMosquitoBota(int steps, void* m, char* c, Simulacao* s)
                 return;
             }
         }
-        //notifyBota(m, getNomeCasa(casa));
-        //printaMosquito(m);
-        //printf(" botou M%d, M%d em %s - %d steps\n", s->mosquitoCount+1, s->mosquitoCount+2, c, getSteps(m));
         mosquito_bota(s, casa);
     }
 }

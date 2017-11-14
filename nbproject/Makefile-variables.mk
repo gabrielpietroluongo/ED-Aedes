@@ -17,11 +17,11 @@ CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/ed-aedes-master.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=ed-aedes-master
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/ed-aedes-master
+CND_ARTIFACT_NAME_Release=ed-aedes
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/ed-aedes
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=ed-aedes-master.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/ed-aedes-master.tar
+CND_PACKAGE_NAME_Release=ed-aedes.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/ed-aedes.tar
 #
 # include compiler specific variables
 #
