@@ -34,6 +34,21 @@ void adiciona_mosquito(Sentinela* mosquitos, int* mCount)
     }
 }
 
+int getMosquitoId(Mosquito* m)
+{
+    return m->id;
+}
+
+int getSteps(Mosquito* m)
+{
+    return m->steps;
+}
+
+Mosquito* getProxMosquito(Mosquito* m)
+{
+    return m->proxMosquito;
+}
+
 void PrintaMosquitos(Sentinela* mosquitos)
 {
     Mosquito* m = (Mosquito*) getIni(mosquitos);
@@ -78,7 +93,7 @@ void AttachaMosquito(Mosquito* m, Sentinela* dest)
     }
 }
 
-void MataMosquitos(Sentinela* mosquitos, void* s)
+void MataMosquitos(Sentinela* mosquitos)
 {
     Mosquito* m = getIni(mosquitos);
     Mosquito* m2 = m;
@@ -94,24 +109,9 @@ void MataMosquitos(Sentinela* mosquitos, void* s)
     setEnd(mosquitos, NULL, TYPE_MOSQUITO);
 }
 
-int getSteps(Mosquito* m)
-{
-    return m->steps;
-}
-
-Mosquito* getProxMosquito(Mosquito* m)
-{
-    return m->proxMosquito;
-}
-
 void printaMosquito(Mosquito* m)
 {
     fprintf(GLOBAL_log, "Mosquito %d", m->id);
-}
-
-int getMosquitoId(Mosquito* m)
-{
-    return m->id;
 }
 
 void liberaMosquitos(Sentinela* m)

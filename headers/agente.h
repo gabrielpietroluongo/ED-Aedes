@@ -2,23 +2,23 @@
 #define AGENTE_H
 #include "../headers/casa.h"
 /*
- * Tipo opaco Agente
+ * Tipo que define o Agente (tipo opaco)
  */
 typedef struct agente Agente;
 
-void imprime_agente(Agente* ag);
-
 Agente* InitAgente(Casa* casa);
 
-int ProcessaAgente(Agente* ag, void* s);
+int getErrosAgente(Agente* agente);
 
-int getErrosAgente(Agente* a);
+int getAcertosAgente(Agente* agente);
 
-int getAcertosAgente(Agente* a);
+Casa* getCasaAgente(Agente* agente);
 
-Casa* getCasaAgente(Agente* a);
+void imprime_agente(Agente* agente);
 
-void liberaAgente(Agente* s);
+int ProcessaAgente(Agente* agente);
+
+void liberaAgente(Agente* agente);
 
 #endif /* AGENTE_H */
 

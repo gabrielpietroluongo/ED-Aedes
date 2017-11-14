@@ -3,11 +3,23 @@
 #include "../headers/sentinela.h"
 
 /*
- * Tipo opaco Casa.
+ * Tipo que define a Casa (opaco)
  */
 typedef struct casa Casa;
 
 void adiciona_casa(Sentinela* casas, char* nome);
+
+char* getNomeCasa(Casa* casa);
+
+int getQtdMosquitosCasa(Casa* casa);
+
+Casa* getProxCasa(Casa* casa);
+
+Sentinela* getMosquitosCasa(Casa* casa);
+
+Sentinela* getVizinhosCasa(Casa* casa);
+
+int getQtdCasas(Sentinela* casas);
 
 void imprime_casa(Casa* casa);
 
@@ -15,25 +27,9 @@ void imprime_casas(Sentinela* casas);
 
 Casa* AchaCasaPeloNome(Sentinela* casas, char* nome);
 
-Sentinela* getMosquitosCasa(Casa* c);
+void UpdateMosquitosCasa(Casa* casa, int delta);
 
-void UpdateMosquitosCasa(Casa* c, int delta);
-
-Sentinela* getVizinhosCasa(Casa* c);
-
-char* getNomeCasa(Casa* c);
-
-int getQtdCasas(Sentinela* casas);
-
-int getQtdMosquitosCasa(Casa* c);
-
-void processaMosquitos(Sentinela* casas);
-
-void moveMosquitos(Casa* orig, Casa* dest);
-
-Casa* getProxCasa(Casa* c);
-
-void SetMosquitosCasa(Casa* c, int delta);
+void SetMosquitosCasa(Casa* casa, int delta);
 
 void liberaCasas(Sentinela* s);
 

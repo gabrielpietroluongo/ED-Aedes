@@ -15,11 +15,6 @@ struct agente
     int acertos;
 };
 
-void imprime_agente(Agente* ag)
-{
-    fprintf(GLOBAL_log, "Agente (%s)\n", getNomeCasa(ag->CasaAtual));
-}
-
 Agente* InitAgente(Casa* casa)
 {
     Agente* a = malloc(sizeof(Agente));
@@ -27,19 +22,6 @@ Agente* InitAgente(Casa* casa)
     a->erros = 0;
     a->acertos = 0;
     return a;
-}
-
-int ProcessaAgente(Agente* ag, void* s)
-{
-    Casa* c = ag->CasaAtual;
-    c = achaCasaIdealAgente(getVizinhosCasa(c));
-    fprintf(GLOBAL_log, "Agente %s -> %s\n", getNomeCasa(ag->CasaAtual), getNomeCasa(c));
-    ag->CasaAtual = c;
-    int q = getQtdMosquitosCasa(c);
-    if(!q) ag->erros++; else ag->acertos++;
-    MataMosquitos(getMosquitosCasa(c), s);
-    UpdateMosquitosCasa(c, -q);
-    return q;
 }
 
 int getErrosAgente(Agente* a)
@@ -55,6 +37,25 @@ int getAcertosAgente(Agente* a)
 Casa* getCasaAgente(Agente* a)
 {
     return a->CasaAtual;
+}
+
+void imprime_agente(Agente* ag)
+{
+    fprintf(GLOBAL_log, "Agente (%s)\n", getNomeCasa(ag->CasaAtual));
+}
+
+int ProcessaAgente(Agente* ag)
+{
+    Casa* c = ag->CasaAtual;
+    c = achaCasaIdealAgente(getVizinhosCasa(c));
+    fprintf(GLOBAL_log, "Agente %s -> %s\n", getNomeCasa(ag->CasaAtual), 
+            getNomeCasa(c));
+    ag->CasaAtual = c;
+    int q = getQtdMosquitosCasa(c);
+    if(!q) ag->erros++; else ag->acertos++;
+    MataMosquitos(getMosquitosCasa(c));
+    UpdateMosquitosCasa(c, -q);
+    return q;
 }
 
 void liberaAgente(Agente* s)

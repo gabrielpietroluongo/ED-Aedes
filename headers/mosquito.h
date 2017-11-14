@@ -3,11 +3,17 @@
 #include "../headers/sentinela.h"
 
 /*
- * Tipo opaco Mosquito.
+ * Tipo que define o Mosquito (opaco)
  */
 typedef struct mosquito Mosquito;
 
 void adiciona_mosquito(Sentinela* mosquitos, int* mCount);
+
+int getMosquitoId(Mosquito* m);
+
+int getSteps(Mosquito* m);
+
+Mosquito* getProxMosquito(Mosquito* m);
 
 void PrintaMosquitos(Sentinela* mosquitos);
 
@@ -15,13 +21,7 @@ void TransfereMosquito(Sentinela* orig, Sentinela* dest, char* no, char* nd, voi
 
 void AttachaMosquito(Mosquito* m, Sentinela* dest);
 
-void MataMosquitos(Sentinela* mosquitos, void* s);
-
-int getSteps(Mosquito* m);
-
-Mosquito* getProxMosquito(Mosquito* m);
-
-int getMosquitoId(Mosquito* m);
+void MataMosquitos(Sentinela* mosquitos);
 
 void liberaMosquitos(Sentinela* m);
 

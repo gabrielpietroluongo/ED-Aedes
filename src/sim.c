@@ -13,12 +13,52 @@
 #define PATH_LOG "%s/log.txt"
 #define PATH_LOG_SIZE 8
 
+/*
+ * LoadInstructions(): Funcao que carrega as informacoes do aquivo de
+ * configuracoes para a simulacao.
+ * 
+ * inputs: s (ponteiro de Simulacao que contem os dados da simulacao)
+ * outputs: nenhum
+ * pre-condicao: s iniciada
+ * pos-condicao: simulacao executada e terminada
+ */
 static void LoadInstructions(Simulacao* s);
 
+/*
+ * mosquito_move(): Funcao que realiza todas as movimentacoes de mosquito na
+ * simulacao.
+ * 
+ * inputs: s (ponteiro de Simulacao que contem os dados da simulacao)
+ * outputs: nenhum
+ * pre-condicao: s iniciada
+ * pos-condicao: todas as movimentacoes de mosquito possiveis realizadas
+ */
 static void mosquito_move(Simulacao* s);
 
+/*
+ * agente_atua(): Funcao que move o agente de casa e o faz eliminar os
+ * mosquitos dessa casa
+ * 
+ * inputs: s (ponteiro de Simulacao que contem os dados da simulacao)
+ * outputs: nenhum
+ * pre-condicao: s iniciada e com movimentacoes de mosquitos suficientes para o
+ *               agente atuar
+ * pos-condicao: agente muda de casa eliminando todos os mosquitos da mesma
+ */
 static void agente_atua(Simulacao* s);
 
+/*
+ * mosquito_bota(): Funcao que faz um mosquito reproduzir dentro de uma casa, 
+ * gerando mais dois mosquitos na mesma
+ * 
+ * inputs: s (ponteiro de Simulacao que contem os dados da simulacao) e casa (
+ *         ponteiro da casa onde o mosquito reproduziu)
+ * outputs: nenhum
+ * pre-condicao: s e casa iniciadas e com movimentos do mosquito suficiente para
+ *               o mosquito botar
+ * pos-condicao: s com numero de mosquitos atualizada e casa com dois mosquitos
+ *               novos e com numero de mosquitos atualizado     
+ */
 static void mosquito_bota(Simulacao* s, Casa* casa);
 
 static void imprime_inifim(Simulacao* sim, int status);
@@ -76,9 +116,6 @@ void InitSim(char* path, Simulacao** sim)
     fclose(s->config);
 }
 
-/*
- * Carregador de instruções rudimentar
- */
 static void LoadInstructions(Simulacao* s)
 {
     char buf[99];
@@ -200,7 +237,7 @@ static void mosquito_move(Simulacao* s)
 
 static void agente_atua(Simulacao* s)
 {
-    s->mosquitosAtuais -= ProcessaAgente(s->agente, s);
+    s->mosquitosAtuais -= ProcessaAgente(s->agente);
 }
 
 static void mosquito_bota(Simulacao* s, Casa* casa)

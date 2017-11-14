@@ -6,9 +6,6 @@
 #include "../headers/mosquito.h"
 #include "../headers/utility.h"
 
-
-Casa* AchaCasaPeloNome(Sentinela* casas, char* nome);
-
 struct casa
 {
     char* nome;
@@ -46,26 +43,19 @@ void adiciona_casa(Sentinela* casas, char* nome)
     }
 }
 
-Casa* AchaCasaPeloNome(Sentinela* s, char* nome)
+char* getNomeCasa(Casa* c)
 {
-    Casa* c = getIni(s);
-    while(c != NULL)
-    {
-        if(!strcmp(c->nome, nome))
-            return c;
-        c = c->proxCasa;
-    }
-    printf("\n\n\n\n\nCASA NAO ENCONTRADA %s\n\n\n\n\n", nome);
-    return NULL;
+    return c->nome;
 }
 
-
-void imprime_casa(Casa* casa)
+int getQtdMosquitosCasa(Casa* c)
 {
-    fprintf(GLOBAL_log, "%s(vizinhos)", casa->nome);
-    PrintaVizinhos(casa->vizinhos);
-    fprintf(GLOBAL_log, "%s(mosquitos)", casa->nome);
-    PrintaMosquitos(casa->mosquitos);
+    return c->qntMosquitos;
+}
+
+Casa* getProxCasa(Casa* c)
+{
+    return (Casa*) c->proxCasa;
 }
 
 Sentinela* getMosquitosCasa(Casa* c)
@@ -78,6 +68,26 @@ Sentinela* getVizinhosCasa(Casa* c)
     return c->vizinhos;
 }
 
+int getQtdCasas(Sentinela* casas)
+{
+    int n = 0;
+    Casa* c = getIni(casas);
+    while(c != NULL)
+    {
+        c = c->proxCasa;
+        n++;
+    }
+    return n;
+}
+
+void imprime_casa(Casa* casa)
+{
+    fprintf(GLOBAL_log, "%s(vizinhos)", casa->nome);
+    PrintaVizinhos(casa->vizinhos);
+    fprintf(GLOBAL_log, "%s(mosquitos)", casa->nome);
+    PrintaMosquitos(casa->mosquitos);
+}
+
 void imprime_casas(Sentinela* casas)
 {
     Casa* c = getIni(casas);
@@ -88,31 +98,17 @@ void imprime_casas(Sentinela* casas)
     }
 }
 
-char* getNomeCasa(Casa* c)
+Casa* AchaCasaPeloNome(Sentinela* s, char* nome)
 {
-    return c->nome;
-}
-
-int getQtdCasas(Sentinela* casas)
-{
-    int n;
-    Casa* c = getIni(casas);
+    Casa* c = getIni(s);
     while(c != NULL)
     {
+        if(!strcmp(c->nome, nome))
+            return c;
         c = c->proxCasa;
-        n++;
     }
-    return n;
-}
-
-int getQtdMosquitosCasa(Casa* c)
-{
-    return c->qntMosquitos;
-}
-
-Casa* getProxCasa(Casa* c)
-{
-    return (Casa*) c->proxCasa;
+    fprintf(GLOBAL_log, "\n\n\n\n\nCASA NAO ENCONTRADA %s\n\n\n\n\n", nome);
+    return NULL;
 }
 
 void UpdateMosquitosCasa(Casa* c, int delta)

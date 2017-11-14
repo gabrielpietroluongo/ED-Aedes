@@ -4,7 +4,7 @@
 #include "../headers/casa.h"
 
 /*
- * Tipo opaco Vizinho
+ * Tipo que define o Vizinho (opaco)
  */
 typedef struct vizinho Vizinho;
 

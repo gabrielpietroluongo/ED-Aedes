@@ -7,7 +7,7 @@
 #define TYPE_MOSQUITO 2
 
 /* 
- * Tipo opaco Sentinela
+ * Tipo que define a Sentinela (opaco)
  */
 typedef struct sentinela Sentinela;
 
